@@ -14,8 +14,8 @@ public class NodeMap {
     public NodeMap(int n) {
         this.n = n;
 
-        for ( int i = 0; i < n; i += 5) {
-            for ( int j = 0; j < n; j += 5) {
+        for ( int i = 0; i <= n; i += 5) {
+            for ( int j = 0; j <= n; j += 5) {
                 insertNode(i, j);
             }
         }
@@ -37,6 +37,7 @@ public class NodeMap {
         int x;
         int y;
         String key;
+        Node origin = null;
         ArrayList<Node> neighbors = new ArrayList<Node>();
 
         public Node(int x, int y) {
@@ -50,6 +51,20 @@ public class NodeMap {
             neighbors.add(map.get(coords2key(x, y - OFFSET))); //up
             neighbors.add(map.get(coords2key(x + OFFSET, y))); //right
             neighbors.add(map.get(coords2key(x - OFFSET, y))); //left
+            neighbors.add(map.get(coords2key(x + OFFSET, y + OFFSET)));
+            neighbors.add(map.get(coords2key(x - OFFSET, y + OFFSET)));
+            neighbors.add(map.get(coords2key(x - OFFSET, y - OFFSET)));
+            neighbors.add(map.get(coords2key(x + OFFSET, y - OFFSET)));
+
+
+        }
+
+        public void setOrigin(Node n){
+            origin = n;
+        }
+
+        public Node getOrigin(){
+            return origin;
         }
 
         
@@ -70,6 +85,15 @@ public class NodeMap {
     }
 
     public Node getNode(int x, int y) {
-        return map.get(coords2key(x,y));
+         
+        Node result = map.get(coords2key(x,y));
+        if(result == null) System.out.println("This one " + x + "," + y);
+        return result;
+    }
+
+    public double getDistance(Node n1, Node n2) {
+        double diff1 = n2.x - n1.x;
+        double diff2 = n2.y - n1.y;
+        return Math.sqrt((diff1 * diff1) + (diff2 * diff2));
     }
 }
