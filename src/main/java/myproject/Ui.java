@@ -14,29 +14,36 @@ public class Ui {
     static final int NODESIZE = 5;
 
     JFrame frame = new JFrame( "Drawing Polygons" );
+    Graphics g;
     NodeMap map;
 
     public Ui(NodeMap map) {
-        this.map = map; 
+        this.map = map;
+        g = frame.getGraphics(); 
         frame.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
         frame.setSize( map.n, map.n );
-        PolygonsJPanel nodePanel = new PolygonsJPanel();
+        NodePanel nodePanel = new NodePanel();
+        drawNode(map.getNode(15,15));
         frame.add( nodePanel );
         frame.setVisible( true ); 
     }
 
-
-
-class PolygonsJPanel extends JPanel{
- public void paintComponent( Graphics g )
- {
-  super.paintComponent( g ); // call superclass's paintComponent
-
-        for (HashMap.Entry<String,Node> entry : map.map.entrySet()) {
-            int[] coords = map.key2coords(entry.getKey());
-            g.drawOval(coords[0], coords[1], NODESIZE, NODESIZE);
-        }
+    public void drawNode(Node n) { 
+        g.drawOval(n.x, n.y, NODESIZE, NODESIZE);
     }
+
+class NodePanel extends JPanel{
+    public void paintComponent( Graphics g ){
+        // for (HashMap.Entry<String,Node> entry : map.map.entrySet()) {
+        //     int[] coords = map.key2coords(entry.getKey());
+        //     g.drawOval(coords[0], coords[1], NODESIZE, NODESIZE);
+        // }
+    }
+
+   
+
+       
+
 } 
     
 

@@ -52,9 +52,7 @@ public class NodeMap {
             neighbors.add(map.get(coords2key(x - OFFSET, y))); //left
         }
 
-        public String coords2key(int x, int y) {
-            return x + "/" + y;
-        }
+        
     }
 
     public int[] key2coords(String k) {
@@ -65,5 +63,13 @@ public class NodeMap {
         coords[1] = Integer.parseInt(split[1]);
 
         return coords;
+    }
+
+    public String coords2key(int x, int y) {
+        return x + "/" + y;
+    }
+
+    public Node getNode(int x, int y) {
+        return map.get(coords2key(x,y));
     }
 }
