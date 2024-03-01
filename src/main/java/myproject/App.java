@@ -1,13 +1,15 @@
 package myproject;
 
-/**
- * Hello world!
- *
- */
 public class App 
 {
     public static void main( String[] args )
     {
-        System.out.println( "Hello World!" );
+
+        NodeMap map = new NodeMap(500);
+        Ui ui = new Ui(map);
+
+
     }
+
+    
 }
