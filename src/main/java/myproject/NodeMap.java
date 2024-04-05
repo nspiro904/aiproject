@@ -1,8 +1,11 @@
 package myproject;
 
 import java.awt.Graphics;
+import java.awt.Point;
+import java.awt.Polygon;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 
 public class NodeMap {
@@ -14,8 +17,8 @@ public class NodeMap {
     public NodeMap(int n) {
         this.n = n;
 
-        for ( int i = 0; i <= n; i += 5) {
-            for ( int j = 0; j <= n; j += 5) {
+        for ( int i = 0; i <= n; i += OFFSET) {
+            for ( int j = 0; j <= n; j += OFFSET) {
                 insertNode(i, j);
             }
         }
@@ -87,7 +90,6 @@ public class NodeMap {
     public Node getNode(int x, int y) {
          
         Node result = map.get(coords2key(x,y));
-        if(result == null) System.out.println("This one " + x + "," + y);
         return result;
     }
 
@@ -95,5 +97,28 @@ public class NodeMap {
         double diff1 = n2.x - n1.x;
         double diff2 = n2.y - n1.y;
         return Math.sqrt((diff1 * diff1) + (diff2 * diff2));
+    }
+
+    public ArrayList<Point> trimNodes(ArrayList<Polygon> polygons) {
+        
+        ArrayList<String> remove = new ArrayList<>();
+        ArrayList<Point> points = new ArrayList<>();
+
+        for(Polygon p: polygons) {
+
+        for (Map.Entry<String,Node> entry : map.entrySet()) {
+            Node n = entry.getValue();
+            if (p.contains(n.x, n.y)){ 
+                remove.add(entry.getKey());
+                points.add(new Point(n.x, n.y));
+            }
+        }
+    }
+
+        for (String key: remove) {
+            map.remove(key);
+        }
+
+        return points;
     }
 }

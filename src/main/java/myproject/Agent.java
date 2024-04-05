@@ -1,5 +1,6 @@
 package myproject;
 
+import java.awt.Polygon;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -9,15 +10,17 @@ public class Agent {
   
   Random rand = new Random();
 
+  ArrayList<Polygon> polygons;
   ArrayList<Node> opened = new ArrayList<Node>();
   NodeMap map;
   Ui ui;
   Node start;
   Node end;
 
-  public Agent(NodeMap map, Ui ui) {
+  public Agent(NodeMap map, Ui ui, ArrayList<Polygon> polygons) {
     this.map = map;
-    this.ui = ui;  
+    this.ui = ui;
+    this.polygons = polygons;
   }
 
   public void setStart(int x, int y){
@@ -32,16 +35,20 @@ public class Agent {
   public Node rrt() {
     opened.add(start);
     Node current = start;
-
+    map.trimNodes(polygons);
     while ( current != end) {
       Node sample = sample();
       Node nearest = getClosestOpen(sample);
       Node next = extend(nearest,sample);
+
+      if(next != null){
       next.setOrigin(nearest);
       current = next;
       opened.add(current);
+      }
     }
     System.out.println("Done!");
+    System.out.println("nodes opened: " + opened.size());
     return current;
   }
 
@@ -51,7 +58,7 @@ public class Agent {
 
     do {
       result = map.getNode(randNum(), randNum());
-    } while( isOpen(result) );
+    } while( isOpen(result) || result == null);
 
     return result;
   }
