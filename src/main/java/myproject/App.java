@@ -1,7 +1,6 @@
 package myproject;
 
 import java.awt.Polygon;
-import java.awt.Rectangle;
 import java.util.ArrayList;
 
 public class App 
@@ -13,12 +12,12 @@ public class App
         ArrayList<Polygon> polygons = getPolygonList();
         Ui ui = new Ui(map);
         Agent agent = new Agent(map, ui, polygons);
-        agent.setStart(0, 0);
+        agent.setStart(200, 100);
         agent.setEnd(440, 420);
-        // ui.drawResult(agent.rrt(), polygons);
-        agent.rrt();
-        ui.drawFullResult(agent.opened, polygons);
-        ui.frame.setVisible( true );
+        ui.setEnvironment(polygons, agent.rrt(), agent.opened); //while opened get added?
+        // agent.rrt();
+        // ui.drawFullResult(agent.opened, polygons);
+        ui.menu.setVisible( true );
 
     }
 
