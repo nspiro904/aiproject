@@ -14,7 +14,8 @@ public class App
         Agent agent = new Agent(map, ui, polygons);
         agent.setStart(50 , 50);
         agent.setEnd(440, 420);
-        ui.setEnvironment(polygons, agent.rrt(), agent.opened);
+        ui.setEnvironment(polygons, agent.rrt());
+        ui.setOpened(agent.opened);
         // agent.rrt();
         // ui.drawFullResult(agent.opened, polygons);
         ui.menu.setVisible( true );

@@ -34,9 +34,12 @@ public class Ui {
         menu.setBackground(Color.BLACK);
     }
 
-    public void setEnvironment(ArrayList<Polygon> polygons, Node root, ArrayList<Node> opened ) {
+    public void setEnvironment(ArrayList<Polygon> polygons, Node root ) {
         this.polygons = polygons;
         this.root = root;
+    }
+
+    public void setOpened(ArrayList<Node> opened) {
         this.opened = opened;
     }
 
@@ -89,11 +92,27 @@ public class Ui {
             g.fillPolygon(polygonIterator.next());
         }
 
-        g.setColor(Color.red);
+        g.setColor(Color.GRAY);
             for(Node n: opened) {
             if(n.origin != null) g.drawLine(n.x, n.y, n.origin.x, n.origin.y);
             
             }
+
+        Node current = root;
+
+        g.setColor(Color.RED);
+        g.fillOval(current.x - NODESIZE, current.y - NODESIZE, 10, 10);
+
+        g.setColor(Color.YELLOW);
+
+        while ( current != null) {
+            if(current.origin != null) g.drawLine(current.x, current.y, current.origin.x, current.origin.y);
+            if(current.origin == null) {
+                g.setColor(Color.GREEN);
+                g.fillOval(current.x - NODESIZE, current.y - NODESIZE, 10, 10);
+            }
+            current = current.origin;
+        }
             
         }
     }
@@ -109,7 +128,13 @@ public class Ui {
         }
 
     public void drawFullResult() {
-            menu.add(new DrawFullPath());
+        DrawFullPath result = new DrawFullPath();
+        JFrame frame = new JFrame( "Attempt 1" );
+        frame.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
+        frame.setSize( map.n, map.n );
+        frame.setBackground(Color.BLACK);
+        frame.add(result);
+        frame.setVisible(true);
         }
     
     
@@ -122,7 +147,7 @@ public class Ui {
            
             public void actionPerformed(ActionEvent e) {
 
-                drawResult();
+                drawFullResult();
             }
 
         });
