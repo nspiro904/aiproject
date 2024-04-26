@@ -9,7 +9,7 @@ import java.util.Map;
 
 public class NodeMap {
 
-    static final int OFFSET = 5;
+    static final int OFFSET = 2;
 
     HashMap<String,Node> map = new HashMap<String,Node>(); 
     int n;

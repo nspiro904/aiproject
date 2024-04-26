@@ -16,7 +16,7 @@ import java.util.Iterator;
 
 public class Ui {
     
-    static final int NODESIZE = 5;
+    static final int NODESIZE = 2;
 
     JFrame menu = new JFrame( "Drawing Polygons" );
     Graphics g;

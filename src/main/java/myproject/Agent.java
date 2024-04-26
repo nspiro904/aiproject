@@ -33,6 +33,7 @@ public class Agent {
   
 
   public Node rrt() {
+    opened = new ArrayList<Node>();
     opened.add(start);
     Node current = start;
     map.trimNodes(polygons);
@@ -47,9 +48,21 @@ public class Agent {
       opened.add(current);
       }
     }
-    System.out.println("Done!");
     System.out.println("nodes opened: " + opened.size());
     return current;
+  }
+
+  public Node smallTreeRRT() {
+    Node result;
+    long start = System.currentTimeMillis();
+    do {
+      result = rrt();
+    } while( opened.size() > 5000);
+
+    long time = System.currentTimeMillis() - start;
+
+    System.out.println("done in " + time + "ms");
+    return result;
   }
 
   public Node sample() {
