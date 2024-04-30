@@ -10,15 +10,17 @@ public class App
 
         NodeMap map = new NodeMap(500);
         ArrayList<Polygon> polygons = getPolygonList();
-        Ui ui = new Ui(map);
-        Agent agent = new Agent(map, ui, polygons);
-        agent.setStart(50 , 50);
-        agent.setEnd(440, 420);
-        ui.setEnvironment(polygons, agent.smallTreeRRT());
-        ui.setOpened(agent.opened);
+        Ui ui1 = new Ui(map);
+        Agent agent1 = new Agent(map, ui1, polygons);
+        agent1.setStart(50 , 50);
+        agent1.setEnd(440, 420);
+        ui1.setEnvironment(polygons, agent1.smallTreeRRT());
+        ui1.setOpened(agent1.opened);
+        ui1.drawFullResult();
         // agent.rrt();
         // ui.drawFullResult(agent.opened, polygons);
-        ui.menu.setVisible( true );
+
+
 
     }
 

@@ -30,7 +30,6 @@ public class Ui {
         g = menu.getGraphics(); 
         menu.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
         menu.setSize( map.n, map.n );
-        drawMenuButton(menu); 
         menu.setBackground(Color.BLACK);
     }
 
@@ -136,24 +135,6 @@ public class Ui {
         frame.add(result);
         frame.setVisible(true);
         }
-    
-    
-        
-    public void drawMenuButton(JFrame f) {
-        JButton b=new JButton("Test Case 1");  
-        b.setBounds(250, 250,95,30);
-        
-        b.addActionListener(new ActionListener() {
-           
-            public void actionPerformed(ActionEvent e) {
-
-                drawFullResult();
-            }
-
-        });
-        f.add(b);
-    }
-    
  }
 
     
