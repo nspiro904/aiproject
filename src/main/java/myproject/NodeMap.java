@@ -6,6 +6,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import java.util.Iterator;
+
+
 
 public class NodeMap {
 
@@ -41,6 +44,8 @@ public class NodeMap {
         String key;
         Node origin = null;
         ArrayList<Node> neighbors = new ArrayList<Node>();
+        Boolean up;
+        Boolean right;
 
         public Node(int x, int y) {
             this.x = x;
@@ -72,6 +77,54 @@ public class NodeMap {
         
     }
 
+    public void setNodeDirectionHorizontal(ArrayList<Polygon> polygons) {
+
+        Iterator<Polygon> iterator = polygons.listIterator();
+
+        Boolean right = false;
+
+        while(iterator.hasNext()) {
+            ArrayList<Node> nodes = getNodes(iterator.next());
+
+            if(!iterator.hasNext()) right = true;
+            for ( Node node: nodes) {
+                node.right = right;
+            }
+
+            right = !right;
+        }
+    }
+
+    public void setNodeDirectionVertical(ArrayList<Polygon> polygons) {
+
+        Iterator<Polygon> iterator = polygons.listIterator();
+
+        Boolean up = false;
+
+        
+        while(iterator.hasNext()) {
+            ArrayList<Node> nodes = getNodes(iterator.next());
+            
+            if(!iterator.hasNext()) up = true;
+            for ( Node node: nodes) {
+                node.up = up;
+            }
+
+            up = !up;
+        }
+    }
+
+    public ArrayList<Node> getNodes(Polygon polygon) {
+
+        ArrayList<Node> nodes = new ArrayList<>();
+
+        for(Map.Entry<String, Node> entry : map.entrySet()) {
+            int[] coords = key2coords(entry.getKey());
+            if(polygon.contains(coords[0], coords[1])) nodes.add(entry.getValue());
+        }
+
+        return nodes;
+    }
     public int[] key2coords(String k) {
         int[] coords = new int[2];
         String[] split = k.split("/");

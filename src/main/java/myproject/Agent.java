@@ -121,4 +121,54 @@ public class Agent {
     return map.getNode(n.x + xn, n.y + yn);    
   }
 
+
+  public Node cityRRT() {
+    opened = new ArrayList<Node>();
+    opened.add(start);
+    Node current = start;
+    map.trimNodes(polygons);
+    while ( current != end) {
+      Node sample = sample();
+      Node nearest = getClosestOpen(sample);
+      Node next = extend(nearest,sample);
+      if(next != null && isValid(nearest, next)){
+      next.setOrigin(nearest);
+      current = next;
+      opened.add(current);
+      }
+    }
+    System.out.println("nodes opened: " + opened.size());
+    return current;
+  }
+
+  public Boolean isValid(Node origin, Node destination) {
+
+    System.out.println(origin.x + "," + origin.y + "  /  " + destination.x + "," + destination.y + "  /  " +  origin.up + " , " + origin.right);
+
+    int diffX = destination.x - origin.x;
+    int diffY = destination.y - origin.y;
+
+    if(destination.up != null & destination.right != null) {
+      if(destination.up == false && destination.right == false) return false;
+    }
+    if ( origin.up != null) {
+      System.out.println(diffY);
+      if ( diffY == 0) return false;
+      else if(diffY > 0 && origin.up) return false;
+      else if(diffY < 0 && !origin.up) return false;
+      else return true; 
+    }
+
+
+    if ( origin.right != null) {
+
+      if ( diffX == 0) return false;
+      else if (diffX > 0 && !origin.right) return false;
+      else if (diffX < 0 && origin.right) return false;
+      else return true;
+    }
+    System.out.println("validation failed");
+    return false;
+  }
+
 }

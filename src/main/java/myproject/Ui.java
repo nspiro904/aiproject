@@ -1,6 +1,5 @@
 package myproject;
 
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -9,10 +8,9 @@ import myproject.NodeMap.Node;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Polygon;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Map;
 
 public class Ui {
     
@@ -22,14 +20,16 @@ public class Ui {
     Graphics g;
     NodeMap map;
     ArrayList<Polygon> polygons;
+    ArrayList<Polygon> polygonsInvisible;
     Node root;
     ArrayList<Node> opened;
+    ArrayList<Polygon> test;
 
     public Ui(NodeMap map) {
         this.map = map;
         g = menu.getGraphics(); 
         menu.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
-        menu.setSize( map.n, map.n );
+        menu.setSize( map.n, map.n);
         menu.setBackground(Color.BLACK);
     }
 
@@ -40,6 +40,14 @@ public class Ui {
 
     public void setOpened(ArrayList<Node> opened) {
         this.opened = opened;
+    }
+
+    public void setPolygonsInvisible(ArrayList<Polygon> polygons) {
+        polygonsInvisible = polygons;
+    }
+
+    public void setPolygonsTest(ArrayList<Polygon> test) {
+        this.test = test;
     }
 
     class DrawPath extends JPanel {  
@@ -72,7 +80,7 @@ public class Ui {
                 }
                 current = current.origin;
             }
-            
+
         }
 
         
@@ -91,6 +99,7 @@ public class Ui {
             g.fillPolygon(polygonIterator.next());
         }
 
+        
         g.setColor(Color.GRAY);
             for(Node n: opened) {
             if(n.origin != null) g.drawLine(n.x, n.y, n.origin.x, n.origin.y);
@@ -112,7 +121,62 @@ public class Ui {
             }
             current = current.origin;
         }
+
+        if(polygonsInvisible != null) {
+
+            g.setColor(getBackground());
+            Iterator<Polygon> polygonInvisibleIterator = polygonsInvisible.listIterator();
+
+            while(polygonInvisibleIterator.hasNext()) {
+                g.fillPolygon(polygonInvisibleIterator.next());
+            }
+                
+        }
+         
+        if ( test != null) {
+            Iterator<Polygon> testPolygonIterator = test.listIterator();
+
+            while(testPolygonIterator.hasNext()) {
+                g.fillPolygon(testPolygonIterator.next());
+            }
+        }
+
+        g.setColor(Color.PINK);
+
+        //test vertical
+        // for(Map.Entry<String, NodeMap.Node> entry: map.map.entrySet() ) {
             
+        //     Node n = entry.getValue();
+        //     int[] coords = map.key2coords(entry.getKey());
+
+        //     if(n.up != null) {
+        //     if(n.up) g.fillOval(coords[0], coords[1], 2, 2);
+        //     else {
+        //         g.setColor(Color.orange);
+        //         g.fillOval(coords[0], coords[1], 2, 2);
+        //     }
+
+        //     g.setColor(Color.PINK);
+        // }
+        // }
+
+        g.setColor(Color.GREEN);
+        // test horizontal
+        // for(Map.Entry<String, NodeMap.Node> entry: map.map.entrySet() ) {
+            
+        //     Node n = entry.getValue();
+        //     int[] coords = map.key2coords(entry.getKey());
+
+        //     if(n.right != null) {
+        //     if(n.right) g.fillOval(coords[0], coords[1], 2, 2);
+        //     else {
+        //         g.setColor(Color.magenta);
+        //         g.fillOval(coords[0], coords[1], 2, 2);
+        //     }
+
+        //     g.setColor(Color.GREEN);
+        // }
+        // }
         }
     }
 
